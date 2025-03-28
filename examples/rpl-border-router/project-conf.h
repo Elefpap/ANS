@@ -31,6 +31,20 @@
 #ifndef PROJECT_CONF_H_
 #define PROJECT_CONF_H_
 
+
+#define LOG_CONF_LEVEL_RPL                         LOG_LEVEL_DBG
+#define LOG_CONF_LEVEL_TCPIP                       LOG_LEVEL_WARN
+#define LOG_CONF_LEVEL_IPV6                        LOG_LEVEL_WARN
+#define LOG_CONF_LEVEL_6LOWPAN                     LOG_LEVEL_DBG
+#define LOG_CONF_LEVEL_MAC                         LOG_LEVEL_DBG
+#define LOG_CONF_LEVEL_FRAMER                      LOG_LEVEL_INFO
+#define TSCH_LOG_CONF_PER_SLOT                     0
+
+#undef IEEE802154_CONF_DEFAULT_CHANNEL
+#define IEEE802154_CONF_DEFAULT_CHANNEL 18
+#undef IEEE802154_CONF_PANID
+#define IEEE802154_CONF_PANID          0xABD4
+
 #ifndef WEBSERVER_CONF_CFS_CONNS
 #define WEBSERVER_CONF_CFS_CONNS 2
 #endif
@@ -42,5 +56,10 @@
 #if BORDER_ROUTER_CONF_WEBSERVER
 #define UIP_CONF_TCP 1
 #endif
+
+#define LLSEC802154_CONF_ENABLED 1
+#define CSMA_CONF_LLSEC_DEFAULT_KEY0 {0x10, 0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,0x1a,0x1b,0x1c,0x1d,0x1e,0x1f}
+#define CSMA_CONF_LLSEC_SECURITY_LEVEL 5
+#define CSMA_CONF_LLSEC_KEY_ID_MODE 2
 
 #endif /* PROJECT_CONF_H_ */

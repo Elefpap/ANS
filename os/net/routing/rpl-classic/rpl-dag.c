@@ -61,7 +61,7 @@
 #include <limits.h>
 #include <string.h>
 
-#define LOG_MODULE "RPL"
+#define LOG_MODULE "RPL-MALICIOUS"
 #define LOG_LEVEL LOG_LEVEL_RPL
 
 /* A configurable function called after every RPL parent switch */
@@ -1465,6 +1465,15 @@ add_nbr_from_dio(uip_ipaddr_t *from, rpl_dio_t *dio)
 void
 rpl_process_dio(uip_ipaddr_t *from, rpl_dio_t *dio)
 {
+
+
+  #ifdef MALICIOUS_NODE
+    // In malicious mode, ignore all DIO responses.
+    LOG_INFO("WE ARE MALICIOUS BRO\n");
+    return;
+  #endif
+
+  LOG_INFO("WE ARE NOT MALICIOUS\n");
   rpl_instance_t *instance;
   rpl_dag_t *dag, *previous_dag;
   rpl_parent_t *p;

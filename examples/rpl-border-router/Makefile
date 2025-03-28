@@ -14,5 +14,5 @@ MODULES_REL += webserver
 # Include optional target-specific module
 include $(CONTIKI)/Makefile.identify-target
 MODULES_REL += $(TARGET)
-
+MODULES += os/services/shell
 include $(CONTIKI)/Makefile.include
