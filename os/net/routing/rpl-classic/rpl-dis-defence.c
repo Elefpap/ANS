@@ -40,6 +40,9 @@ rpl_dis_defense_check(const uip_ipaddr_t *src_addr)
         if (uip_ipaddr_cmp(&s->src_addr, src_addr))
         {
             // check if the time interval is less than the minimum interval
+            LOG_INFO("DIS defense: checking time interval for ");
+            LOG_INFO_6ADDR(src_addr);
+            LOG_INFO_(" (current time: %u, stored time: %u)\n", current_time, s->ts);
             if (current_time - s->ts < (RPL_DIS_DEFENSE_MIN_INTERVAL * CLOCK_SECOND))
             {
                 // drop it
@@ -51,6 +54,9 @@ rpl_dis_defense_check(const uip_ipaddr_t *src_addr)
             else
             {
                 s->ts = current_time;
+                LOG_INFO("DIS defense: message from ");
+                LOG_INFO_6ADDR(src_addr);
+                LOG_INFO_(" (allowed)\n");
                 return 1;
             }
         }
