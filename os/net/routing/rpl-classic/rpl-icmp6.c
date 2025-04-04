@@ -223,11 +223,13 @@ dis_input(void)
   LOG_INFO_("\n");
 
   /* Apply DIS defense mechanism - filter out too frequent DIS messages */
+  #ifdef RPL_DIS_DEFENSE_ENABLED
   if(!rpl_dis_defense_check(&UIP_IP_BUF->srcipaddr)) {
     LOG_INFO("DIS defense: dropping message (too frequent)\n");
     uipbuf_clear();
     return;
   }
+  #endif
 
   for(instance = &instance_table[0], end = instance + RPL_MAX_INSTANCES;
       instance < end; ++instance) {
