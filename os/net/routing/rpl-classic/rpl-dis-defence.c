@@ -45,7 +45,9 @@ rpl_dis_defense_check(const uip_ipaddr_t *src_addr)
             LOG_INFO_(" (current time: %lu, stored time: %lu)\n", (unsigned long)current_time, (unsigned long)s->ts);
             LOG_INFO("DIS defense: time interval: %lu\n", (unsigned long)(current_time - s->ts));
             LOG_INFO("DIS defense: min interval: %lu\n", (unsigned long)(RPL_DIS_DEFENSE_MIN_INTERVAL * CLOCK_SECOND));
-            if (current_time - s->ts < (RPL_DIS_DEFENSE_MIN_INTERVAL * CLOCK_SECOND))
+            // TODO: check if this is correct, the comments say clock_time is in system ticks
+            unsigned long time_delta = (current_time - s->ts) * CLOCK_SECOND;
+            if (time_delta < (RPL_DIS_DEFENSE_MIN_INTERVAL * CLOCK_SECOND))
             {
                 // drop it
                 LOG_INFO("DIS defense: dropping message from ");
