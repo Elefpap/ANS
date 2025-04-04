@@ -1,3 +1,4 @@
+MAKE_ROUTING = MAKE_ROUTING_RPL_CLASSIC
 CONTIKI_PROJECT = border-router
 all: $(CONTIKI_PROJECT)
 CONTIKI = ../..
@@ -15,4 +16,5 @@ MODULES_REL += webserver
 include $(CONTIKI)/Makefile.identify-target
 MODULES_REL += $(TARGET)
 MODULES += os/services/shell
+CFLAGS += -DRPL_DIS_DEFENSE_ENABLED
 include $(CONTIKI)/Makefile.include

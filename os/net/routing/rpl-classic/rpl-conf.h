@@ -224,7 +224,7 @@
 #ifdef RPL_CONF_DIO_INTERVAL_MIN
 #define RPL_DIO_INTERVAL_MIN        RPL_CONF_DIO_INTERVAL_MIN
 #else
-#define RPL_DIO_INTERVAL_MIN        12
+#define RPL_DIO_INTERVAL_MIN        16
 #endif
 
 /*
