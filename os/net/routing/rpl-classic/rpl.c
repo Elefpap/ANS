@@ -57,6 +57,7 @@
 #include <limits.h>
 #include <string.h>
 
+#include "net/routing/rpl-classic/rpl-dis-defence.h"
 #define LOG_MODULE "RPL"
 #define LOG_LEVEL LOG_LEVEL_RPL
 
@@ -348,6 +349,7 @@ init(void)
   rpl_dag_init();
   rpl_reset_periodic_timer();
   rpl_icmp6_register_handlers();
+  rpl_dis_defense_init();
 
   /* add rpl multicast address */
   uip_create_linklocal_rplnodes_mcast(&rplmaddr);

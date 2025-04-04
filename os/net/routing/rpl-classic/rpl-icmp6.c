@@ -52,6 +52,7 @@
 #include "net/ipv6/uip-sr.h"
 #include "net/ipv6/uip-icmp6.h"
 #include "net/routing/rpl-classic/rpl-private.h"
+#include "net/routing/rpl-classic/rpl-dis-defence.h"
 #include "net/packetbuf.h"
 #include "net/ipv6/multicast/uip-mcast6.h"
 #include "random.h"
@@ -220,6 +221,13 @@ dis_input(void)
   LOG_INFO("Received a DIS from ");
   LOG_INFO_6ADDR(&UIP_IP_BUF->srcipaddr);
   LOG_INFO_("\n");
+
+  /* Apply DIS defense mechanism - filter out too frequent DIS messages */
+  if(!rpl_dis_defense_check(&UIP_IP_BUF->srcipaddr)) {
+    LOG_INFO("DIS defense: dropping message (too frequent)\n");
+    uipbuf_clear();
+    return;
+  }
 
   for(instance = &instance_table[0], end = instance + RPL_MAX_INSTANCES;
       instance < end; ++instance) {
