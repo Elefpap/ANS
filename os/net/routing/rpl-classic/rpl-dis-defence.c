@@ -32,7 +32,8 @@ int
 rpl_dis_defense_check(const uip_ipaddr_t *src_addr)
 {
     dis_source *s;
-    clock_time_t current_time = clock_time();
+    clock_time_t current_time = clock_seconds();
+    clock_time_t cur_time_system_clock = clock_time();
 
     // see if the source is already in the list
     for (s = list_head(dis_source_list); s != NULL; s = list_item_next(s))
@@ -45,9 +46,12 @@ rpl_dis_defense_check(const uip_ipaddr_t *src_addr)
             LOG_INFO_(" (current time: %lu, stored time: %lu)\n", (unsigned long)current_time, (unsigned long)s->ts);
             LOG_INFO("DIS defense: time interval: %lu\n", (unsigned long)(current_time - s->ts));
             LOG_INFO("DIS defense: min interval: %lu\n", (unsigned long)(RPL_DIS_DEFENSE_MIN_INTERVAL * CLOCK_SECOND));
+            LOG_INFO("DIS defense: min interval: %lu s\n", (unsigned long)(RPL_DIS_DEFENSE_MIN_INTERVAL));
+            LOG_INFO("DIS defense: Clock second %lu\n", (unsigned long) CLOCK_SECOND);
+            LOG_INFO("DIS defense: clock time: %lu\n", (unsigned long) cur_time_system_clock);
             // TODO: check if this is correct, the comments say clock_time is in system ticks
-            unsigned long time_delta = (current_time - s->ts) * CLOCK_SECOND;
-            if (time_delta < (RPL_DIS_DEFENSE_MIN_INTERVAL * CLOCK_SECOND))
+            unsigned long time_delta = (current_time - s->ts);
+            if (time_delta < (RPL_DIS_DEFENSE_MIN_INTERVAL))
             {
                 // drop it
                 LOG_INFO("DIS defense: dropping message from ");
